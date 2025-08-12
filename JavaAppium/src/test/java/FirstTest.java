@@ -2,6 +2,8 @@ import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.URL;
@@ -34,7 +36,9 @@ public class FirstTest {
     @Test
     public void firstTest() {
 
-        System.out.println("Hi, Android!");
+        WebElement element = driver.findElement(By.id("org.wikipedia:id/fragment_onboarding_skip_button"));
+        element.click();
+
     }
 
 }
