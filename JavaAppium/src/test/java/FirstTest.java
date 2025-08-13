@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
+import java.time.Duration;
 
 public class FirstTest {
 
@@ -39,25 +39,65 @@ public class FirstTest {
     @Test
     public void firstTest() {
 
-        WebElement elementToInitSearch = driver.findElement(By.id("org.wikipedia:id/fragment_onboarding_skip_button"));
-        elementToInitSearch.click();
 
-        WebElement textFieldFind = driver.findElement(By.xpath("//*[contains(@text, 'Search Wikipedia')]"));
-        textFieldFind.click();
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "------------------Cannot find element SKIP BUTTON---------------------------",
+                5
+        );
 
-        WebElement textFieldFindSecond = driver.findElement(By.id("org.wikipedia:id/search_src_text"));
-        textFieldFindSecond.sendKeys("Java");
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+                5
+
+        );
+
+
+       waitForElementAndSendKeys(
+               By.id("org.wikipedia:id/search_src_text"),
+               "Java",
+               "--------------------------Cannot find field for JAVA -----------------------------------",
+               5
+
+       );
+
+
+        waitForElementPresentByXpath(
+                By.xpath("//*[contains(@text, 'Java (programming')]"),
+                "----------Cannot find searching element by JAVA--------------- ",
+                10
+        );
+
 
 
     }
 
-    private WebElement waitForElementPresentByXpath(String xpath, String error_message, long timeOutInSecond) {
-        WebDriverWait wait = new WebDriverWait(driver, timeOutInSecond);
+    //**********************************************************************************************************************************************
+
+    private WebElement waitForElementPresentByXpath(By by, String error_message, long timeOutInSecond) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInSecond));
         wait.withMessage(error_message + "\n");
-        By by = By.xpath(xpath);
         return wait.until(
                 ExpectedConditions.presenceOfElementLocated(by)
         );
+    }
+
+    private WebElement waitForElementPresentByXpath(By by, String error_message) {
+       return waitForElementPresentByXpath(by, error_message, 5);
+
+    }
+
+    private WebElement waitForElementAndClick(By by, String error_message, long timeOutInSecond) {
+       WebElement element =  waitForElementPresentByXpath(by, error_message, timeOutInSecond);
+       element.click();
+       return element;
+    }
+
+    private WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeOutInSecond) {
+        WebElement element =  waitForElementPresentByXpath(by, error_message,timeOutInSecond);
+        element.sendKeys(value);
+        return element;
     }
 
 }
