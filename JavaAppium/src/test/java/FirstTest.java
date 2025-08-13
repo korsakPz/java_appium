@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
 
@@ -36,9 +39,25 @@ public class FirstTest {
     @Test
     public void firstTest() {
 
-        WebElement element = driver.findElement(By.id("org.wikipedia:id/fragment_onboarding_skip_button"));
-        element.click();
+        WebElement elementToInitSearch = driver.findElement(By.id("org.wikipedia:id/fragment_onboarding_skip_button"));
+        elementToInitSearch.click();
 
+        WebElement textFieldFind = driver.findElement(By.xpath("//*[contains(@text, 'Search Wikipedia')]"));
+        textFieldFind.click();
+
+        WebElement textFieldFindSecond = driver.findElement(By.id("org.wikipedia:id/search_src_text"));
+        textFieldFindSecond.sendKeys("Java");
+
+
+    }
+
+    private WebElement waitForElementPresentByXpath(String xpath, String error_message, long timeOutInSecond) {
+        WebDriverWait wait = new WebDriverWait(driver, timeOutInSecond);
+        wait.withMessage(error_message + "\n");
+        By by = By.xpath(xpath);
+        return wait.until(
+                ExpectedConditions.presenceOfElementLocated(by)
+        );
     }
 
 }
