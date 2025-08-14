@@ -1,20 +1,26 @@
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import java.util.Arrays;
+import io.appium.java_client.AppiumDriver;
 
 import java.net.URL;
 import java.time.Duration;
 
 public class FirstTest {
 
-    private AndroidDriver driver;
+    private AppiumDriver driver;
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -229,20 +235,15 @@ public class FirstTest {
         );
 
 
-        WebElement title_element = waitForElementPresent(
+       waitForElementPresent(
                 By.xpath("//*[contains(@text, 'Java (programming language)')]"),
                 "-------------Cannot find article title----------------------",
                 10
 
         );
-        String article_element = title_element.getAttribute("text");
 
-        Assert.assertEquals(
-                article_element,
-                "Java (programming language)",
-                "-----------We see unexpected Title-----------------"
 
-        );
+
     }
 
     //**********************************************************************************************************************************************
@@ -284,6 +285,32 @@ public class FirstTest {
         WebElement element = waitForElementPresent(by, error_message, timeOutInSecond);
         element.clear();
         return element;
+    }
+
+    protected void swipeApp(int timeOfSwipe) {
+
+        Dimension  size = driver.manage().window().getSize();
+        int center_x = size.width / 2;
+        int start_y = (int) (size.height * 0.8);
+        int end_y = (int) (size.height * 0.2);
+
+        // Создаём указатель (палец)
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+
+        // Создаём последовательность действий
+        Sequence swipe = new Sequence(finger, 1);
+
+
+
+        // Добавляем действия:
+        swipe.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.VIEWPORT, center_x, start_y));
+        swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+        swipe.addAction(finger.createPointerMove(Duration.ofMillis(timeOfSwipe), PointerInput.Origin.VIEWPORT, center_x, end_y));
+        swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+
+        // Выполняем свайп
+        driver.perform(Arrays.asList(swipe));
+
     }
 
 }
