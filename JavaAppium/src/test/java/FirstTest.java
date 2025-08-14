@@ -1,4 +1,3 @@
-import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,11 +11,12 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import java.util.Arrays;
+
 import io.appium.java_client.AppiumDriver;
 
 import java.net.URL;
 import java.time.Duration;
+import java.util.Collections;
 
 public class FirstTest {
 
@@ -235,18 +235,19 @@ public class FirstTest {
         );
 
 
-       waitForElementPresent(
+        waitForElementPresent(
                 By.xpath("//*[contains(@text, 'Java (programming language)')]"),
                 "-------------Cannot find article title----------------------",
                 10
 
         );
 
+        swipeUp(10000);
 
 
     }
 
-    //**********************************************************************************************************************************************
+    //********************************************Универсальные методы**************************************************************************************************
 
     private WebElement waitForElementPresent(By by, String error_message, long timeOutInSecond) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInSecond));
@@ -287,30 +288,58 @@ public class FirstTest {
         return element;
     }
 
-    protected void swipeApp(int timeOfSwipe) {
+    //---------------------------------------------------------Метод Свайп----------------------------------------------
+    protected void swipeUp(int timeOfSwipe) {
 
-        Dimension  size = driver.manage().window().getSize();
-        int center_x = size.width / 2;
-        int start_y = (int) (size.height * 0.8);
-        int end_y = (int) (size.height * 0.2);
+        Dimension size = driver.manage().window().getSize();
+        System.out.println("[DEBUG] Screen size: " + size); // Лог размеров экрана
 
-        // Создаём указатель (палец)
+        int centerX = size.width / 2;
+        int startY = (int) (size.height * 0.8);
+        int endY = (int) (size.height * 0.2);
+
+        // Логируем координаты свайпа
+        System.out.printf("[DEBUG] Swipe coordinates: from (X=%d, Y=%d) to (X=%d, Y=%d)%n",
+                centerX, startY, centerX, endY);
+
+        // 2. Создаем PointerInput (современная замена TouchAction)
         PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        System.out.println("[DEBUG] PointerInput created"); // Лог создания PointerInput
 
-        // Создаём последовательность действий
-        Sequence swipe = new Sequence(finger, 1);
+        // 3. Создаем последовательность действий
+        Sequence swipe = new Sequence(finger, 0);
+        System.out.println("[DEBUG] Sequence created"); // Лог создания Sequence
 
+        // 4. Добавляем шаги свайпа:
+        swipe.addAction(finger.createPointerMove(Duration.ZERO,
+                PointerInput.Origin.viewport(), centerX, startY));
+        System.out.println("[DEBUG] Added move to start position");
 
-
-        // Добавляем действия:
-        swipe.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.VIEWPORT, center_x, start_y));
         swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
-        swipe.addAction(finger.createPointerMove(Duration.ofMillis(timeOfSwipe), PointerInput.Origin.VIEWPORT, center_x, end_y));
-        swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+        System.out.println("[DEBUG] Added pointer down");
 
-        // Выполняем свайп
-        driver.perform(Arrays.asList(swipe));
+        swipe.addAction(finger.createPointerMove(Duration.ofMillis(timeOfSwipe),
+                PointerInput.Origin.viewport(), centerX, endY));
+        System.out.println("[DEBUG] Added move to end position");
+
+        swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+        System.out.println("[DEBUG] Added pointer up");
+
+        // 5. Выполняем свайп
+        System.out.println("[DEBUG] Performing swipe...");
+        driver.perform(Collections.singletonList(swipe));
+        System.out.println("[DEBUG] Swipe performed successfully");
+
+        // 6. Небольшая пауза для стабильности
+        try {
+            Thread.sleep(8000);
+            System.out.println("[DEBUG] Post-swipe pause completed");
+        } catch (InterruptedException ignored) {
+            System.out.println("[WARN] Swipe pause interrupted");
+        }
 
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
 }
