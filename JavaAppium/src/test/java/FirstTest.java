@@ -230,7 +230,7 @@ public class FirstTest {
         );
         waitForElementAndClick(
                 By.xpath("//android.widget.ImageView[@content-desc=\"Close\"]"),
-                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+                "----------------------------Cannot find element WIDGET in search field - SEARCH WIKIPEDIA----------------------------------",
                 5
         );
 
@@ -242,7 +242,53 @@ public class FirstTest {
 
         );
 
-        swipeUp(10000);
+
+
+
+    }
+
+    @Test
+    public void testSwipeToElementOnWindow() {
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "------------------Cannot find element SKIP BUTTON---------------------------",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+                5
+        );
+
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Appium",
+                "--------------------------Cannot find field for JAVA -----------------------------------",
+                5
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/page_list_item_title"),
+                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageView[@content-desc=\"Close\"]"),
+                "----------------------------Cannot find element WIDGET in search field - SEARCH WIKIPEDIA----------------------------------",
+                5
+        );
+
+        swipeToFindElement(
+                By.xpath("//*[contains(@text, 'Content is available under')]"),
+                "--------------- Cannot find element in this article -----------------------------",
+                4
+        );
+
+
+
 
 
     }
@@ -341,5 +387,28 @@ public class FirstTest {
     }
 
     //------------------------------------------------------------------------------------------------------------------
+
+    //------------------------Свайп до элемента ------------------------------------------------------------------------
+    protected void swipeUpQuick()
+    {
+        swipeUp(200);
+    }
+
+    protected void swipeToFindElement(By by, String error_message, int max_swipes) {
+
+
+        int alredy_swiped = 0;
+        while (driver.findElements(by).size() == 0) {
+
+            if (alredy_swiped > max_swipes) {
+                waitForElementPresent(by, "--------------- Cannot find element by swipping up. \n " + error_message, 0);
+                return;
+            }
+
+            swipeUpQuick();
+            ++alredy_swiped;
+        }
+
+    }
 
 }
