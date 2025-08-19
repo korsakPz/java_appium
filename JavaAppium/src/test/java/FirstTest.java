@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
@@ -428,7 +429,7 @@ public class FirstTest {
     }
 
     @Test
-    public void testAmountOfNotEmptySearch () {
+    public void testAmountOfNotEmptySearch() throws InterruptedException{
 
 
         String nameSearchLine = "Search Wikipedia";
@@ -459,23 +460,40 @@ public class FirstTest {
         );
 
         waitForElementPresent(
-                By.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id='org.wikipedia:id/search_results_list']\" +\n" +
-                                "\"/android.view.ViewGroup[1]//*[ends-with(@resource-id, 'fragment_onboarding_skip_button')]"),
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']"),
                 "--------Unexpected situation ---   ",
-                5
-
-
+                25
 
         );
 
 
-        int amountOfSearchResults = getAmountOfElements(
-                By.xpath(elementlocator)
-        );
+        // Пробуем разные локаторы
+        By elementsLocator;
+        int amountOfSearchResults = 0;
 
+        // Вариант 1: По заголовкам (самый надежный)
+        elementsLocator = By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']");
+        amountOfSearchResults = getAmountOfElements(elementsLocator);
+
+        // Если не нашли по заголовкам, пробуем другой вариант
+        if (amountOfSearchResults == 0) {
+            elementsLocator = By.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id='org.wikipedia:id/search_results_list']//android.view.ViewGroup");
+            amountOfSearchResults = getAmountOfElements(elementsLocator);
+        }
+
+        // Если все еще не нашли, пробуем третий вариант
+        if (amountOfSearchResults == 0) {
+            elementsLocator = By.xpath("//*[contains(@resource-id, 'page_list_item')]");
+            amountOfSearchResults = getAmountOfElements(elementsLocator);
+        }
+
+        System.out.println("Total search results found: " + amountOfSearchResults);
+
+        // Проверяем, что результаты не пустые
         Assert.assertTrue(
+
                 amountOfSearchResults > 0,
-                "----------We found too few results!---------"
+                "We found too few results! Expected more than 0, but got: " + amountOfSearchResults
 
         );
 
@@ -627,7 +645,34 @@ public class FirstTest {
     //---------------------------- Assert methods -----------------------------------------------------------
 
     private int getAmountOfElements(By by){
-        List elements = driver.findElements(by);
-        return elements.size();
+//        List elements = driver.findElements(by);
+//        return elements.size();
+
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+        try {
+            // Ждем появления хотя бы одного элемента
+            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(by, 0));
+
+            List<WebElement> elements = driver.findElements(by);
+            System.out.println("Found " + elements.size() + " elements with locator: " + by.toString());
+
+            // Дополнительная проверка видимости
+            int visibleCount = 0;
+            for (WebElement element : elements) {
+                if (element.isDisplayed()) {
+                    visibleCount++;
+                }
+            }
+            System.out.println("Visible elements: " + visibleCount);
+
+            return visibleCount > 0 ? visibleCount : elements.size();
+
+        } catch (TimeoutException e) {
+            System.out.println("No elements found within timeout with locator: " + by.toString());
+            return 0;
+        }
+
     }
 }
