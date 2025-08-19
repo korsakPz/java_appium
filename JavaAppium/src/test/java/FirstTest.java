@@ -16,6 +16,7 @@ import org.testng.Assert;
 import java.net.URL;
 import java.time.Duration;
 import java.util.Collections;
+import java.util.List;
 
 public class FirstTest {
 
@@ -426,6 +427,62 @@ public class FirstTest {
 
     }
 
+    @Test
+    public void testAmountOfNotEmptySearch () {
+
+
+        String nameSearchLine = "Search Wikipedia";
+        String nameFindLine = "Java";
+
+        String elementlocator = "//*[contains(@resource-id, 'fragment_onboarding_skip_button')]";
+
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "------------------Cannot find element SKIP BUTTON---------------------------",
+                5
+        );
+
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, '" + nameSearchLine + "')]"),
+                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+                5
+        );
+
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                nameFindLine,
+                "--------------------------Cannot find field for JAVA -----------------------------------",
+                5
+        );
+
+        waitForElementPresent(
+                By.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id='org.wikipedia:id/search_results_list']\" +\n" +
+                                "\"/android.view.ViewGroup[1]//*[ends-with(@resource-id, 'fragment_onboarding_skip_button')]"),
+                "--------Unexpected situation ---   ",
+                5
+
+
+
+        );
+
+
+        int amountOfSearchResults = getAmountOfElements(
+                By.xpath(elementlocator)
+        );
+
+        Assert.assertTrue(
+                amountOfSearchResults > 0,
+                "----------We found too few results!---------"
+
+        );
+
+
+
+    }
+
     //********************************************Универсальные методы**************************************************************************************************
 
     private WebElement waitForElementPresent(By by, String error_message, long timeOutInSecond) {
@@ -565,5 +622,12 @@ public class FirstTest {
 
         driver.perform(Collections.singletonList(swipe));
 
+    }
+
+    //---------------------------- Assert methods -----------------------------------------------------------
+
+    private int getAmountOfElements(By by){
+        List elements = driver.findElements(by);
+        return elements.size();
     }
 }
