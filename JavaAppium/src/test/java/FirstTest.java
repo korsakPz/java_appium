@@ -1,3 +1,4 @@
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,8 +12,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
-import io.appium.java_client.AppiumDriver;
 
 import java.net.URL;
 import java.time.Duration;
@@ -243,8 +242,6 @@ public class FirstTest {
         );
 
 
-
-
     }
 
     @Test
@@ -286,11 +283,6 @@ public class FirstTest {
                 "--------------- Cannot find element in this article -----------------------------",
                 4
         );
-
-
-
-
-
 
 
     }
@@ -345,13 +337,11 @@ public class FirstTest {
         );
 
 
-
         waitForElementAndClick(
                 By.xpath("//*[contains(@text, 'Add to another reading list')]"),
                 "---------------------------- Cannot find element SAVE on the bottom PANEL ----------------------------------",
                 30
         );
-
 
 
 //        waitForElementAndClick(
@@ -403,41 +393,43 @@ public class FirstTest {
                 10
         );
 
-//        waitForElementAndClick(
-//                By.xpath("//android.widget.TextView[@resource-id=\"org.wikipedia:id/item_title\" and @text=\"Test\"]"),
-//                "---------------------------- Cannot find element in the SAVED directory ----------------------------------",
-//                5
-//        );
-//
-//        waitForElementPresent(
-//          By.xpath("//*[contains(@text, 'Java (programming language)')]"),
-//          "",
-//                5
-//
-//        );
-//
-//        waitForElementAndClick(
-//                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
-//                "----------------- Cannot find element BACK on the window -------------------",
-//                5
-//
-//        );
-//
-//        waitForElementAndClick(
-//                By.xpath("(//android.widget.ImageView[@resource-id=\"org.wikipedia:id/navigation_bar_item_icon_view\"])[1]"),
-//                "------------------------------ Cannot find element on the bottom PANEL in the main winadow ----------------------",
-//                5
-//        );
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/nav_tab_reading_lists"),
+                "---------------------------- Cannot find element in the SAVED directory ----------------------------------",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("(//android.view.ViewGroup[@resource-id='org.wikipedia:id/item_title_container'])[2]//*[@text='testSaveList']"),
+                "",
+                5
+
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/buttonView"),
+                "-----------Go to BACK because need it----------------------",
+                5
+
+        );
 
 
+        swipeElementToLeft(
+                By.id("org.wikipedia:id/page_list_item_title"),
+                ""
 
+        );
 
-
+        waitForElementPresent(
+                By.id("org.wikipedia:id/reading_list_empty_text"),
+                "----------Cannot find empty text ",
+                5
+        );
 
 
     }
 
-        //********************************************Универсальные методы**************************************************************************************************
+    //********************************************Универсальные методы**************************************************************************************************
 
     private WebElement waitForElementPresent(By by, String error_message, long timeOutInSecond) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInSecond));
@@ -533,8 +525,7 @@ public class FirstTest {
     //------------------------------------------------------------------------------------------------------------------
 
     //------------------------Свайп до элемента ------------------------------------------------------------------------
-    protected void swipeUpQuick()
-    {
+    protected void swipeUpQuick() {
         swipeUp(200);
     }
 
@@ -555,4 +546,27 @@ public class FirstTest {
 
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
+    //----------------------------- Свайп влево ------------------------------------------------------------------------
+
+    protected void swipeElementToLeft(By by, String error_message) {
+
+        WebElement element = waitForElementPresent(by, error_message, 10);
+
+        int leftX = element.getLocation().getX();
+        int rightX = element.getLocation().getX() + element.getSize().getWidth();
+        int middleY = element.getLocation().getY() + element.getSize().getHeight() / 2;
+
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence swipe = new Sequence(finger, 1);
+
+        swipe.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), rightX, middleY));
+        swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+        swipe.addAction(finger.createPointerMove(Duration.ofMillis(500), PointerInput.Origin.viewport(), leftX, middleY));
+        swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+
+        driver.perform(Collections.singletonList(swipe));
+
+    }
 }
