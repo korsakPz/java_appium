@@ -291,9 +291,153 @@ public class FirstTest {
 
 
 
+
+
     }
 
-    //********************************************Универсальные методы**************************************************************************************************
+    //------------------------------------------ Сохранить статью -----------------------------------------------------------------------------
+
+    @Test
+    public void testSaveArticle() {
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "------------------Cannot find element SKIP BUTTON---------------------------",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+                5
+        );
+
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "--------------------------Cannot find field for JAVA -----------------------------------",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Java (programming language)')]"),
+                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageView[@content-desc=\"Close\"]"),
+                "----------------------------Cannot find element WIDGET in search field - SEARCH WIKIPEDIA----------------------------------",
+                15
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/page_save"),
+                "---------------------------- Cannot find element SAVE on the bottom PANEL ----------------------------------",
+                5
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/page_save"),
+                "---------------------------- Cannot find element SAVE on the bottom PANEL dowble ----------------------------------",
+                5
+        );
+
+
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Add to another reading list')]"),
+                "---------------------------- Cannot find element SAVE on the bottom PANEL ----------------------------------",
+                30
+        );
+
+
+
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Java (programming language)')]"),
+//                "---------------------------- Cannot find element SAVE on the bottom PANEL ----------------------------------",
+//                5
+//        );
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Create new')]"),
+                "---------------------------- Cannot find element SAVE on the bottom PANEL ----------------------------------",
+                5
+        );
+
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Java (programming language)')]"),
+//                "---------------------------- Cannot find element SAVE on the bottom PANEL ----------------------------------",
+//                5
+//        );
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/text_input"),
+                "testSaveList",
+                "---------------------- __Cannot send Name of this list__ value",
+                5
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/text_input"),
+                "---------------------------- Cannot find element OK  on the  PANEL ----------------------------------",
+                5
+        );
+
+        waitForElementAndClick(
+                By.id("android:id/button1"),
+                "---------------------------- Cannot find element BACK arrow pictures ----------------------------------",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
+                "---------------------------- Cannot find element BACK arrow pictures ----------------------------------",
+                20
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_toolbar']//*[@content-desc='Navigate up']"),
+                "---------------------------- Cannot find element BACK arrow  ----------------------------------",
+                10
+        );
+
+//        waitForElementAndClick(
+//                By.xpath("//android.widget.TextView[@resource-id=\"org.wikipedia:id/item_title\" and @text=\"Test\"]"),
+//                "---------------------------- Cannot find element in the SAVED directory ----------------------------------",
+//                5
+//        );
+//
+//        waitForElementPresent(
+//          By.xpath("//*[contains(@text, 'Java (programming language)')]"),
+//          "",
+//                5
+//
+//        );
+//
+//        waitForElementAndClick(
+//                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
+//                "----------------- Cannot find element BACK on the window -------------------",
+//                5
+//
+//        );
+//
+//        waitForElementAndClick(
+//                By.xpath("(//android.widget.ImageView[@resource-id=\"org.wikipedia:id/navigation_bar_item_icon_view\"])[1]"),
+//                "------------------------------ Cannot find element on the bottom PANEL in the main winadow ----------------------",
+//                5
+//        );
+
+
+
+
+
+
+
+    }
+
+        //********************************************Универсальные методы**************************************************************************************************
 
     private WebElement waitForElementPresent(By by, String error_message, long timeOutInSecond) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInSecond));
