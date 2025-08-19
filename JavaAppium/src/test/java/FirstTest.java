@@ -292,14 +292,21 @@ public class FirstTest {
     @Test
     public void testSaveArticle() {
 
+        String testSaveList = "testSaveList";
+        String searchLine = "Search Wikipedia";
+        String nameFindLine = "Java";
+        String nameArticle = "Java (programming language)";
+
+
         waitForElementAndClick(
                 By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
                 "------------------Cannot find element SKIP BUTTON---------------------------",
                 5
         );
 
+
         waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                By.xpath("//*[contains(@text, '" + searchLine + "')]"),
                 "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
                 5
         );
@@ -307,13 +314,14 @@ public class FirstTest {
 
         waitForElementAndSendKeys(
                 By.id("org.wikipedia:id/search_src_text"),
-                "Java",
+                nameFindLine,
                 "--------------------------Cannot find field for JAVA -----------------------------------",
                 5
         );
 
+
         waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Java (programming language)')]"),
+                By.xpath("//*[contains(@text, '" + nameArticle + "')]"),
                 "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
                 5
         );
@@ -344,27 +352,16 @@ public class FirstTest {
         );
 
 
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Java (programming language)')]"),
-//                "---------------------------- Cannot find element SAVE on the bottom PANEL ----------------------------------",
-//                5
-//        );
-
         waitForElementAndClick(
                 By.xpath("//*[contains(@text, 'Create new')]"),
                 "---------------------------- Cannot find element SAVE on the bottom PANEL ----------------------------------",
                 5
         );
 
-//        waitForElementAndClick(
-//                By.xpath("//*[contains(@text, 'Java (programming language)')]"),
-//                "---------------------------- Cannot find element SAVE on the bottom PANEL ----------------------------------",
-//                5
-//        );
 
         waitForElementAndSendKeys(
                 By.id("org.wikipedia:id/text_input"),
-                "testSaveList",
+                testSaveList,
                 "---------------------- __Cannot send Name of this list__ value",
                 5
         );
