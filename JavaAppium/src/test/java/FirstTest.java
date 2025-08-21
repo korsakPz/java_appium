@@ -1,24 +1,14 @@
-import org.openqa.selenium.ScreenOrientation;
-
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
-import org.openqa.selenium.ScreenOrientation;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.screenorientation.ScreenOrientation;
-
 
 import java.net.URL;
 import java.time.Duration;
@@ -556,11 +546,9 @@ public class FirstTest {
     @Test
     public void testChangeScreenOrientationOnSearchResult() {
 
-        String nameSearchLine = "Search Wikipedia";
         String nameFindLine = "Java";
         String nameArticle = "Java (programming language)";
         String searchLine = "Search Wikipedia";
-
 
 
         waitForElementAndClick(
@@ -606,18 +594,14 @@ public class FirstTest {
         String title_before_rotation = waitForElementAndGetAttribute(
                 By.xpath("//*[contains(@text, 'Java (programming language)')]"),
                 "text",
-                        "-----------Cannot find title of article ---------",
+                "-----------Cannot find title of article ---------",
                 15
 
         );
 
-        driver.setOrientation();
+        driver.rotate(org.openqa.selenium.ScreenOrientation.LANDSCAPE);
 
-        try {
-            Thread.sleep(3000); // дать время UI перерисоваться
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         String title_after_rotation = waitForElementAndGetAttribute(
                 By.xpath("//*[contains(@text, 'Java (programming language)')]"),
                 "text",
@@ -633,6 +617,66 @@ public class FirstTest {
 
         );
 
+        driver.rotate(ScreenOrientation.PORTRAIT);
+        String title_after_second_rotation = waitForElementAndGetAttribute(
+                By.xpath("//*[contains(@text, 'Java (programming language)')]"),
+                "text",
+                "-----------Cannot find title of article ---------",
+                15
+
+        );
+
+        Assert.assertEquals(
+                title_after_second_rotation,
+                title_before_rotation,
+                "Article title have been changed after screen rotation"
+
+        );
+    }
+
+    @Test
+    public void testBackgroundApp() {
+
+        String nameFindLine = "Java";
+        String nameArticle = "Java (programming language)";
+        String searchLine = "Search Wikipedia";
+
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "------------------Cannot find element SKIP BUTTON---------------------------",
+                5
+        );
+
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, '" + searchLine + "')]"),
+                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+                5
+        );
+
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                nameFindLine,
+                "--------------------------Cannot find field for JAVA -----------------------------------",
+                5
+        );
+
+
+        waitForElementPresent(
+                By.xpath("//*[contains(@text, '" + nameArticle + "')]"),
+                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+                5
+        );
+
+        driver.runAppInBackground(Duration.ofSeconds(4));
+
+        waitForElementPresent(
+                By.xpath("//*[contains(@text, '" + nameArticle + "')]"),
+                "----------------------------Cannot find article after returning after background----------------------------------",
+                5
+        );
 
 
     }
