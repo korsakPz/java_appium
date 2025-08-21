@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import org.openqa.selenium.ScreenOrientation;
+import io.appium.java_client.screenorientation.ScreenOrientation;
 
 import java.net.URL;
 import java.time.Duration;
@@ -25,7 +26,7 @@ import java.util.List;
 
 public class FirstTest {
 
-    private AppiumDriver driver;
+    private AndroidDriver driver;
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -553,13 +554,11 @@ public class FirstTest {
     @Test
     public void testChangeScreenOrientationOnSearchResult() {
 
-        MainPage mainPage = new MainPage(driver);
-        SearchPage searchPage = mainPage.clickSearchField();
-
-        String testSaveList = "testSaveList";
-        String searchLine = "Search Wikipedia";
+        String nameSearchLine = "Search Wikipedia";
         String nameFindLine = "Java";
         String nameArticle = "Java (programming language)";
+        String searchLine = "Search Wikipedia";
+
 
 
         waitForElementAndClick(
@@ -610,8 +609,13 @@ public class FirstTest {
 
         );
 
-        driver.executeScript("mobile: rotate", ImmutableMap.of("orientation", "LANDSCAPE"));
+        driver.getOrientation(ScreenOrientation.LANDSCAPE);
 
+        try {
+            Thread.sleep(3000); // дать время UI перерисоваться
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         String title_after_rotation = waitForElementAndGetAttribute(
                 By.xpath("//*[contains(@text, 'Java (programming language)')]"),
                 "text",
