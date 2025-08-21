@@ -15,7 +15,7 @@ public class FirstTest extends CoreTestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        MainPageObject = new (driver);
+        MainPageObject = new MainPageObject(driver);
     }
 
 
@@ -444,18 +444,18 @@ public class FirstTest extends CoreTestCase {
 
         // Вариант 1: По заголовкам (самый надежный)
         elementsLocator = By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']");
-        amountOfSearchResults = getAmountOfElements(elementsLocator);
+        amountOfSearchResults =  MainPageObject.getAmountOfElements(elementsLocator);
 
         // Если не нашли по заголовкам, пробуем другой вариант
         if (amountOfSearchResults == 0) {
             elementsLocator = By.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id='org.wikipedia:id/search_results_list']//android.view.ViewGroup");
-            amountOfSearchResults = getAmountOfElements(elementsLocator);
+            amountOfSearchResults =  MainPageObject.getAmountOfElements(elementsLocator);
         }
 
         // Если все еще не нашли, пробуем третий вариант
         if (amountOfSearchResults == 0) {
             elementsLocator = By.xpath("//*[contains(@resource-id, 'page_list_item')]");
-            amountOfSearchResults = getAmountOfElements(elementsLocator);
+            amountOfSearchResults =  MainPageObject.getAmountOfElements(elementsLocator);
         }
 
         System.out.println("Total search results found: " + amountOfSearchResults);
