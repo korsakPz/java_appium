@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import io.appium.java_client.screenorientation.ScreenOrientation;
+import org.openqa.selenium.ScreenOrientation;
 
 import java.net.URL;
 import java.time.Duration;
@@ -552,6 +552,9 @@ public class FirstTest {
     //+++++++++++++++++++++++++++++++++ Тест с поворотом экрана ++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Test
     public void testChangeScreenOrientationOnSearchResult() {
+
+        MainPage mainPage = new MainPage(driver);
+        SearchPage searchPage = mainPage.clickSearchField();
 
         String testSaveList = "testSaveList";
         String searchLine = "Search Wikipedia";
