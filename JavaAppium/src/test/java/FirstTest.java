@@ -1,3 +1,4 @@
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.AfterEach;
@@ -14,10 +15,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import io.appium.java_client.screenorientation.ScreenOrientation;
+
 import java.net.URL;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
+
 
 public class FirstTest {
 
@@ -429,7 +433,7 @@ public class FirstTest {
     }
 
     @Test
-    public void testAmountOfNotEmptySearch() throws InterruptedException{
+    public void testAmountOfNotEmptySearch() throws InterruptedException {
 
 
         String nameSearchLine = "Search Wikipedia";
@@ -494,6 +498,129 @@ public class FirstTest {
 
                 amountOfSearchResults > 0,
                 "We found too few results! Expected more than 0, but got: " + amountOfSearchResults
+
+        );
+
+
+    }
+
+    @Test
+    public void testAmountOfEmptySearch() {
+
+        String nameSearchLine = "Search Wikipedia";
+        String nameFindLine = "kjdsjhgfks";
+
+        String elementlocator = "//*[contains(@text, 'No results')]";
+
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "------------------Cannot find element SKIP BUTTON---------------------------",
+                5
+        );
+
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, '" + nameSearchLine + "')]"),
+                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+                5
+        );
+
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                nameFindLine,
+                "--------------------------Cannot find field for JAVA -----------------------------------",
+                5
+        );
+
+        waitForElementPresent(
+                By.xpath(elementlocator),
+                "--- Cannot find search empty element ----- " + elementlocator,
+                15
+        );
+
+        assertElementNotPresent(
+                By.id(elementlocator),
+                "---- We have found some results by request " + nameSearchLine
+        );
+
+
+    }
+
+
+    //+++++++++++++++++++++++++++++++++ Тест с поворотом экрана ++++++++++++++++++++++++++++++++++++++++++++++++++++
+    @Test
+    public void testChangeScreenOrientationOnSearchResult() {
+
+        String testSaveList = "testSaveList";
+        String searchLine = "Search Wikipedia";
+        String nameFindLine = "Java";
+        String nameArticle = "Java (programming language)";
+
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "------------------Cannot find element SKIP BUTTON---------------------------",
+                5
+        );
+
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, '" + searchLine + "')]"),
+                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+                5
+        );
+
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                nameFindLine,
+                "--------------------------Cannot find field for JAVA -----------------------------------",
+                5
+        );
+
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, '" + nameArticle + "')]"),
+                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageView[@content-desc=\"Close\"]"),
+                "----------------------------Cannot find element WIDGET in search field - SEARCH WIKIPEDIA----------------------------------",
+                15
+        );
+
+//        waitForElementAndClick(
+//                By.xpath("//*[contains(@text, '" + nameArticle + "')]"),
+//                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+//                5
+//        );
+
+        String title_before_rotation = waitForElementAndGetAttribute(
+                By.xpath("//*[contains(@text, 'Java (programming language)')]"),
+                "text",
+                        "-----------Cannot find title of article ---------",
+                15
+
+        );
+
+        driver.executeScript("mobile: rotate", ImmutableMap.of("orientation", "LANDSCAPE"));
+
+        String title_after_rotation = waitForElementAndGetAttribute(
+                By.xpath("//*[contains(@text, 'Java (programming language)')]"),
+                "text",
+                "-----------Cannot find title of article ---------",
+                15
+
+        );
+
+        Assert.assertEquals(
+                title_after_rotation,
+                title_before_rotation,
+                "Article title have been changed after screen rotation"
 
         );
 
@@ -644,7 +771,7 @@ public class FirstTest {
 
     //---------------------------- Assert methods -----------------------------------------------------------
 
-    private int getAmountOfElements(By by){
+    private int getAmountOfElements(By by) {
 //        List elements = driver.findElements(by);
 //        return elements.size();
 
@@ -674,5 +801,19 @@ public class FirstTest {
             return 0;
         }
 
+    }
+
+    private void assertElementNotPresent(By by, String errorMessage) {
+        int amountOfElements = getAmountOfElements(by);
+        if (amountOfElements > 0) {
+            String defaultMessage = "An element " + by.toString() + " supposed to be not present";
+            throw new AssertionError(defaultMessage + " " + errorMessage);
+
+        }
+    }
+
+    private String waitForElementAndGetAttribute(By by, String attribute, String errorMessage, long timeoutInSecond) {
+        WebElement element = waitForElementPresent(by, errorMessage, timeoutInSecond);
+        return element.getAttribute(attribute);
     }
 }
