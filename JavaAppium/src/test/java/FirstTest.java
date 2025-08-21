@@ -1,5 +1,5 @@
-import com.google.common.collect.ImmutableMap;
-import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.ScreenOrientation;
+
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import org.openqa.selenium.ScreenOrientation;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.screenorientation.ScreenOrientation;
+
 
 import java.net.URL;
 import java.time.Duration;
@@ -609,7 +611,7 @@ public class FirstTest {
 
         );
 
-        driver.getOrientation(ScreenOrientation.LANDSCAPE);
+        driver.setOrientation();
 
         try {
             Thread.sleep(3000); // дать время UI перерисоваться
