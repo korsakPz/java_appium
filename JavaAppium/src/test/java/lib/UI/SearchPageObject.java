@@ -15,10 +15,11 @@ public class SearchPageObject extends MainPageObject {
     public SearchPageObject(AndroidDriver driver) {
 
         super(driver);
+
     }
 //++++++++++++++++++++++++++++++++++++++++++++++++++ Метод шаблонов ++++++++++++++++++++++++++++++++++++++++++++++++++
     private static String getResultSearchElement(String substring) {
-        return.SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{SUBSTRING}", substring);
+        return SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{SUBSTRING}", substring);
     }
 
     //++++++++++++++++++++++++++++++++++++++++++++++ Метод шаблонов +++++++++++++++++++++++++++++++++++++++++++++++++
@@ -27,7 +28,7 @@ public class SearchPageObject extends MainPageObject {
         this.waitForElementAndClick(
                 By.id(SEARCH_SCIP_ELEMENT),
                 "---Cannot find search element ---------",
-                5
+                15
         );
 
 
