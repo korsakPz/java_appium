@@ -39,7 +39,7 @@ public class SearchPageObject extends MainPageObject {
         );
 
         this.waitForElementPresent(
-                By.id(SEARCH_INIT_ELEMENT),
+                By.xpath(SEARCH_INIT_ELEMENT),
                 " ----------- Cannot search element -------------",
                 5
         );
