@@ -1,5 +1,6 @@
 import lib.CoreTestCase;
 import lib.UI.MainPageObject;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ScreenOrientation;
@@ -12,9 +13,10 @@ import java.time.Duration;
 public class FirstTest extends CoreTestCase {
     private MainPageObject MainPageObject;
 
-    protected void setUp() throws Exception {
-        super.setUp();
-
+    @BeforeEach
+    @Override
+    public void setUp() throws Exception {
+        super.setUp(); // Это вызовет setUp() из CoreTestCase
         MainPageObject = new MainPageObject(driver);
     }
 
@@ -634,7 +636,7 @@ public class FirstTest extends CoreTestCase {
                 By.id("org.wikipedia:id/search_src_text"),
                 nameFindLine,
                 "--------------------------Cannot find field for JAVA -----------------------------------",
-                5
+                15
         );
 
 
