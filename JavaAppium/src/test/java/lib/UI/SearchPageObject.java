@@ -9,7 +9,8 @@ public class SearchPageObject extends MainPageObject {
             SEARCH_SCIP_ELEMENT = "org.wikipedia:id/fragment_onboarding_skip_button",
             SEARCH_INIT_ELEMENT = "//*[contains(@text, 'Search Wikipedia')]",
             SEARCH_INPUT = "org.wikipedia:id/search_src_text",
-            SEARCH_RESULT_BY_SUBSTRING_TPL = "//*[contains(@text, '{SUBSTRING}')]";
+            SEARCH_RESULT_BY_SUBSTRING_TPL = "//*[contains(@text, '{SUBSTRING}')]",
+            SEARCH_CANCEL_BUTTON = "//android.widget.ImageButton[@content-desc=\"Navigate up\"]";
 
 
     public SearchPageObject(AndroidDriver driver) {
@@ -54,15 +55,63 @@ public class SearchPageObject extends MainPageObject {
         );
     }
 
+
     public void waitForSearchResult(String substring) {
         String search_result_line = getResultSearchElement(substring);
 
         this.waitForElementPresent(
                 By.xpath(search_result_line),
                 "------ Cannot find element present with substring ------ " + substring,
+                15
+
+        );
+    }
+
+    public void clickByArticleWithSubstring(String substring) {
+        String search_result_line = getResultSearchElement(substring);
+
+        this.waitForElementAndClick(
+                By.xpath(search_result_line),
+                "------ Cannot find and click search result with sustring ------ " + substring,
+                10
+
+        );
+    }
+
+    public void waitForCancelButtonToAppear() {
+        this.waitForElementPresent(
+                By.xpath(SEARCH_CANCEL_BUTTON),
+                "---- Cannot find search cancel button -------",
+                15
+        );
+
+    }
+
+    public void waitForCancelButtonToDisappear() {
+        this.waitForElementNotPresent(
+                By.xpath(SEARCH_CANCEL_BUTTON),
+                "---- Search cancel button is still present -------",
+                15
+        );
+
+    }
+
+    public void clickCanselSearch() {
+        this.waitForElementAndClick(
+                By.xpath(SEARCH_CANCEL_BUTTON),
+                "---- Cannot find click search button -------",
+                5
+        );
+    }
+
+    public void clickByElement(By by,String click_element) {
+        this.waitForElementAndClick(
+                by(),
+                "------ Cannot search click element  --------",
                 5
 
         );
     }
+
 
 }

@@ -22,10 +22,90 @@ public class FirstTest extends CoreTestCase {
     }
 
 
-
     @Test
     public void testSearch() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
 
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeInSearchLine("Java");
+        SearchPageObject.waitForSearchResult("Java (programming");
+
+    }
+
+    @Test
+    public void testCanselSearch() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        SearchPageObject.waitForCancelButtonToAppear();
+        SearchPageObject.clickCanselSearch();
+        SearchPageObject.waitForCancelButtonToDisappear();
+
+    }
+
+    @Test
+    public void testCompareArticleTitle() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeInSearchLine("Java");
+        SearchPageObject.clickByArticleWithSubstring("Java (programming language)");
+
+//        MainPageObject.waitForElementAndClick(
+//                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+//                "------------------Cannot find element SKIP BUTTON---------------------------",
+//                5
+//        );
+//
+//        MainPageObject.waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+//                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+//                5
+//        );
+
+
+//        MainPageObject.waitForElementAndSendKeys(
+//                By.id("org.wikipedia:id/search_src_text"),
+//                "Java",
+//                "--------------------------Cannot find field for JAVA -----------------------------------",
+//                5
+//        );
+
+//        MainPageObject.waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Java (programming language)')]"),
+//                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+//                5
+//        );
+
+        MainPageObject.waitForElementAndClick(
+                By.xpath("//android.widget.ImageView[@content-desc=\"Close\"]"),
+                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+                5
+        );
+
+        WebElement title_element = MainPageObject.waitForElementPresent(
+                By.xpath("//*[contains(@text, 'Java (programming language)')]"),
+                "-------------Cannot find article title----------------------",
+                10
+
+        );
+
+        String article_element = title_element.getAttribute("text");
+        Assert.assertEquals(
+                article_element,
+                "Java (programming language)",
+                "-----------We see unexpected Title-----------------"
+
+        );
+    }
+
+    @Test
+    public void testClearElement() {
+
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeInSearchLine("Java");
 
 //        MainPageObject.waitForElementAndClick(
 //                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
@@ -39,7 +119,6 @@ public class FirstTest extends CoreTestCase {
 //                5
 //        );
 //
-//
 //        MainPageObject.waitForElementAndSendKeys(
 //                By.id("org.wikipedia:id/search_src_text"),
 //                "Java",
@@ -47,131 +126,11 @@ public class FirstTest extends CoreTestCase {
 //                5
 //        );
 //
-//
-//        MainPageObject.waitForElementPresent(
-//                By.xpath("//*[contains(@text, 'Java (programming')]"),
-//                "----------Cannot find searching element by JAVA--------------- ",
-//                10
+//        MainPageObject.waitForElementAndClear(
+//                By.id("org.wikipedia:id/search_src_text"),
+//                "Java",
+//                5
 //        );
-
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-
-        SearchPageObject.initSearchInput();
-        SearchPageObject.typeInSearchLine("Java");
-        SearchPageObject.waitForSearchResult("Java (programming)");
-
-
-    }
-
-    @Test
-    public void testCanselSearch() {
-
-        MainPageObject.waitForElementAndClick(
-                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
-                "------------------Cannot find element SKIP BUTTON---------------------------",
-                5
-        );
-
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
-                5
-        );
-
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//android.widget.ImageButton[@content-desc=\"Navigate up\"]"),
-                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
-                5
-        );
-
-
-        MainPageObject.waitForElementNotPresent(
-                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
-                5
-        );
-
-
-    }
-
-    @Test
-    public void testCompareArticleTitle() {
-
-        MainPageObject.waitForElementAndClick(
-                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
-                "------------------Cannot find element SKIP BUTTON---------------------------",
-                5
-        );
-
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
-                5
-        );
-
-
-        MainPageObject.waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_src_text"),
-                "Java",
-                "--------------------------Cannot find field for JAVA -----------------------------------",
-                5
-        );
-
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Java (programming language)')]"),
-                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
-                5
-        );
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//android.widget.ImageView[@content-desc=\"Close\"]"),
-                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
-                5
-        );
-
-
-        WebElement title_element =  MainPageObject.waitForElementPresent(
-                By.xpath("//*[contains(@text, 'Java (programming language)')]"),
-                "-------------Cannot find article title----------------------",
-                10
-
-        );
-        String article_element = title_element.getAttribute("text");
-
-        Assert.assertEquals(
-                article_element,
-                "Java (programming language)",
-                "-----------We see unexpected Title-----------------"
-
-        );
-    }
-
-    @Test
-    public void testClearElement() {
-
-        MainPageObject.waitForElementAndClick(
-                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
-                "------------------Cannot find element SKIP BUTTON---------------------------",
-                5
-        );
-
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
-                5
-        );
-
-        MainPageObject.waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_src_text"),
-                "Java",
-                "--------------------------Cannot find field for JAVA -----------------------------------",
-                5
-        );
-
-        MainPageObject.waitForElementAndClear(
-                By.id("org.wikipedia:id/search_src_text"),
-                "Java",
-                5
-        );
 
         MainPageObject.waitForElementNotPresent(
                 By.id("org.wikipedia:id/search_close_btn"),
@@ -453,18 +412,18 @@ public class FirstTest extends CoreTestCase {
 
         // Вариант 1: По заголовкам (самый надежный)
         elementsLocator = By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']");
-        amountOfSearchResults =  MainPageObject.getAmountOfElements(elementsLocator);
+        amountOfSearchResults = MainPageObject.getAmountOfElements(elementsLocator);
 
         // Если не нашли по заголовкам, пробуем другой вариант
         if (amountOfSearchResults == 0) {
             elementsLocator = By.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id='org.wikipedia:id/search_results_list']//android.view.ViewGroup");
-            amountOfSearchResults =  MainPageObject.getAmountOfElements(elementsLocator);
+            amountOfSearchResults = MainPageObject.getAmountOfElements(elementsLocator);
         }
 
         // Если все еще не нашли, пробуем третий вариант
         if (amountOfSearchResults == 0) {
             elementsLocator = By.xpath("//*[contains(@resource-id, 'page_list_item')]");
-            amountOfSearchResults =  MainPageObject.getAmountOfElements(elementsLocator);
+            amountOfSearchResults = MainPageObject.getAmountOfElements(elementsLocator);
         }
 
         System.out.println("Total search results found: " + amountOfSearchResults);
@@ -574,7 +533,7 @@ public class FirstTest extends CoreTestCase {
 //                5
 //        );
 
-        String title_before_rotation =  MainPageObject.waitForElementAndGetAttribute(
+        String title_before_rotation = MainPageObject.waitForElementAndGetAttribute(
                 By.xpath("//*[contains(@text, 'Java (programming language)')]"),
                 "text",
                 "-----------Cannot find title of article ---------",
@@ -585,7 +544,7 @@ public class FirstTest extends CoreTestCase {
         driver.rotate(org.openqa.selenium.ScreenOrientation.LANDSCAPE);
 
 
-        String title_after_rotation =  MainPageObject.waitForElementAndGetAttribute(
+        String title_after_rotation = MainPageObject.waitForElementAndGetAttribute(
                 By.xpath("//*[contains(@text, 'Java (programming language)')]"),
                 "text",
                 "-----------Cannot find title of article ---------",
@@ -601,7 +560,7 @@ public class FirstTest extends CoreTestCase {
         );
 
         driver.rotate(ScreenOrientation.PORTRAIT);
-        String title_after_second_rotation =  MainPageObject.waitForElementAndGetAttribute(
+        String title_after_second_rotation = MainPageObject.waitForElementAndGetAttribute(
                 By.xpath("//*[contains(@text, 'Java (programming language)')]"),
                 "text",
                 "-----------Cannot find title of article ---------",
