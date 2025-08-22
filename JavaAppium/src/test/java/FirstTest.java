@@ -1,5 +1,6 @@
 import lib.CoreTestCase;
 import lib.UI.MainPageObject;
+import lib.UI.SearchPageObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -26,32 +27,38 @@ public class FirstTest extends CoreTestCase {
     public void testSearch() {
 
 
-        MainPageObject.waitForElementAndClick(
-                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
-                "------------------Cannot find element SKIP BUTTON---------------------------",
-                5
-        );
+//        MainPageObject.waitForElementAndClick(
+//                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+//                "------------------Cannot find element SKIP BUTTON---------------------------",
+//                5
+//        );
+//
+//        MainPageObject.waitForElementAndClick(
+//                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+//                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+//                5
+//        );
+//
+//
+//        MainPageObject.waitForElementAndSendKeys(
+//                By.id("org.wikipedia:id/search_src_text"),
+//                "Java",
+//                "--------------------------Cannot find field for JAVA -----------------------------------",
+//                5
+//        );
+//
+//
+//        MainPageObject.waitForElementPresent(
+//                By.xpath("//*[contains(@text, 'Java (programming')]"),
+//                "----------Cannot find searching element by JAVA--------------- ",
+//                10
+//        );
 
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
-                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
-                5
-        );
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
 
-
-        MainPageObject.waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_src_text"),
-                "Java",
-                "--------------------------Cannot find field for JAVA -----------------------------------",
-                5
-        );
-
-
-        MainPageObject.waitForElementPresent(
-                By.xpath("//*[contains(@text, 'Java (programming')]"),
-                "----------Cannot find searching element by JAVA--------------- ",
-                10
-        );
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeInSearchLine("Java");
+        SearchPageObject.waitForSearchResult("Java (programming)");
 
 
     }
