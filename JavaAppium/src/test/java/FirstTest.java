@@ -50,6 +50,7 @@ public class FirstTest extends CoreTestCase {
         SearchPageObject.initSearchInput();
         SearchPageObject.typeInSearchLine("Java");
         SearchPageObject.clickByArticleWithSubstring("Java (programming language)");
+        SearchPageObject.clickByElement(By.xpath("//android.widget.ImageView[@content-desc=\"Close\"]"));
 
 //        MainPageObject.waitForElementAndClick(
 //                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
@@ -77,11 +78,11 @@ public class FirstTest extends CoreTestCase {
 //                5
 //        );
 
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//android.widget.ImageView[@content-desc=\"Close\"]"),
-                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
-                5
-        );
+//        MainPageObject.waitForElementAndClick(
+//                By.xpath("//android.widget.ImageView[@content-desc=\"Close\"]"),
+//                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+//                5
+//        );
 
         WebElement title_element = MainPageObject.waitForElementPresent(
                 By.xpath("//*[contains(@text, 'Java (programming language)')]"),

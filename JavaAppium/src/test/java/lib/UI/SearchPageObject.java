@@ -104,9 +104,9 @@ public class SearchPageObject extends MainPageObject {
         );
     }
 
-    public void clickByElement(By by,String click_element) {
+    public void clickByElement(By by) {
         this.waitForElementAndClick(
-                by(),
+                by,
                 "------ Cannot search click element  --------",
                 5
 
