@@ -1,3 +1,5 @@
+package tests;
+
 import lib.CoreTestCase;
 import lib.UI.MainPageObject;
 import org.junit.jupiter.api.Test;
