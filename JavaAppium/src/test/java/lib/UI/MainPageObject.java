@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class MainPageObject{
-    protected AndroidDriver driver;
+    protected static AndroidDriver driver;
 
     public MainPageObject(AndroidDriver driver) {
         this.driver = driver;
@@ -23,7 +23,7 @@ public class MainPageObject{
 
     //********************************************Универсальные методы**************************************************************************************************
 
-    public WebElement waitForElementPresent(By by, String error_message, long timeOutInSecond) {
+    public static WebElement waitForElementPresent(By by, String error_message, long timeOutInSecond) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInSecond));
         wait.withMessage(error_message + "\n");
         return wait.until(
@@ -36,19 +36,19 @@ public class MainPageObject{
 
     }
 
-    public WebElement waitForElementAndClick(By by, String error_message, long timeOutInSecond) {
+    public static WebElement waitForElementAndClick(By by, String error_message, long timeOutInSecond) {
         WebElement element = waitForElementPresent(by, error_message, timeOutInSecond);
         element.click();
         return element;
     }
 
-    public WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeOutInSecond) {
+    public static WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeOutInSecond) {
         WebElement element = waitForElementPresent(by, error_message, timeOutInSecond);
         element.sendKeys(value);
         return element;
     }
 
-    public boolean waitForElementNotPresent(By by, String error_message, long timeOutInSecond) {
+    public static boolean waitForElementNotPresent(By by, String error_message, long timeOutInSecond) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInSecond));
         wait.withMessage(error_message + "\n");
         return wait.until(
@@ -142,7 +142,7 @@ public class MainPageObject{
 
     //----------------------------- Свайп влево ------------------------------------------------------------------------
 
-    public void swipeElementToLeft(By by, String error_message) {
+    public static void swipeElementToLeft(By by, String error_message) {
 
         WebElement element = waitForElementPresent(by, error_message, 10);
 
@@ -164,7 +164,7 @@ public class MainPageObject{
 
     //---------------------------- Assert methods -----------------------------------------------------------
 
-    public int getAmountOfElements(By by) {
+    public static int getAmountOfElements(By by) {
 //        List elements = driver.findElements(by);
 //        return elements.size();
 
@@ -196,7 +196,7 @@ public class MainPageObject{
 
     }
 
-    public void assertElementNotPresent(By by, String errorMessage) {
+    public static void assertElementNotPresent(By by, String errorMessage) {
         int amountOfElements = getAmountOfElements(by);
         if (amountOfElements > 0) {
             String defaultMessage = "An element " + by.toString() + " supposed to be not present";
@@ -205,7 +205,7 @@ public class MainPageObject{
         }
     }
 
-    public String waitForElementAndGetAttribute(By by, String attribute, String errorMessage, long timeoutInSecond) {
+    public static String waitForElementAndGetAttribute(By by, String attribute, String errorMessage, long timeoutInSecond) {
         WebElement element = waitForElementPresent(by, errorMessage, timeoutInSecond);
         return element.getAttribute(attribute);
     }
