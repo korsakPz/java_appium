@@ -28,7 +28,7 @@ public class ArticleTests extends CoreTestCase {
         Assert.assertEquals(
                 article_element,
                 "Java (programming language)",
-                "-----------We see unexpected Title-----------------"
+                "Java (programming language)"
 
         );
     }
