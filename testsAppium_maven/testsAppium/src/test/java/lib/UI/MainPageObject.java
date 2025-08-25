@@ -243,17 +243,17 @@ public class MainPageObject {
     }
 
     public WebElement waitForElementPresent(By by, String error_message) {
-        return waitForElementPresent(By, error_message, 5);
+        return waitForElementPresent(by, error_message, 5);
     }
 
     public static WebElement waitForElementAndClick(By by, String error_message, long timeOutInSecond) {
-        WebElement element = waitForElementPresent(By, error_message, timeOutInSecond);
+        WebElement element = waitForElementPresent(by, error_message, timeOutInSecond);
         element.click();
         return element;
     }
 
     public static WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeOutInSecond) {
-        WebElement element = waitForElementPresent(By, error_message, timeOutInSecond);
+        WebElement element = waitForElementPresent(by, error_message, timeOutInSecond);
         element.sendKeys(value);
         return element;
     }
@@ -265,7 +265,7 @@ public class MainPageObject {
     }
 
     public WebElement waitForElementAndClear(By by, String error_message, long timeOutInSecond) {
-        WebElement element = waitForElementPresent(By, error_message, timeOutInSecond);
+        WebElement element = waitForElementPresent(by, error_message, timeOutInSecond);
         element.clear();
         return element;
     }
@@ -299,7 +299,7 @@ public class MainPageObject {
         int alredy_swiped = 0;
         while (driver.findElements(by).size() == 0) {
             if (alredy_swiped > max_swipes) {
-                waitForElementPresent(By, "Cannot find element by swipping up. " + error_message, 0);
+                waitForElementPresent(by, "Cannot find element by swipping up. " + error_message, 0);
                 return;
             }
             swipeUpQuick();
@@ -308,7 +308,7 @@ public class MainPageObject {
     }
 
     public static void swipeElementToLeft(By by, String error_message) {
-        WebElement element = waitForElementPresent(By, error_message, 10);
+        WebElement element = waitForElementPresent(by, error_message, 10);
         int leftX = element.getLocation().getX();
         int rightX = element.getLocation().getX() + element.getSize().getWidth();
         int middleY = element.getLocation().getY() + element.getSize().getHeight() / 2;
@@ -350,7 +350,7 @@ public class MainPageObject {
     }
 
     public static String waitForElementAndGetAttribute(By by, String attribute, String errorMessage, long timeoutInSecond) {
-        WebElement element = waitForElementPresent(By, errorMessage, timeoutInSecond);
+        WebElement element = waitForElementPresent(by, errorMessage, timeoutInSecond);
         return element.getAttribute(attribute);
     }
 }
