@@ -2,11 +2,11 @@ package tests;
 
 import lib.CoreTestCase;
 import lib.UI.ArticlePageObject;
+import lib.UI.MainPageObject;
 import lib.UI.SearchPageObject;
-import lib.UI.factory.ArticlePageObjectFactory;
-import lib.UI.factory.SearchPageObjectFactory;
 import org.junit.Assert;
 import org.junit.Test;
+import org.openqa.selenium.By;
 
 
 public class ArticleTests extends CoreTestCase {
