@@ -6,21 +6,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import java.time.Duration;
 
 
 public class FirstTest extends CoreTestCase {
-    private MainPageObject MainPageObject;
+//    private MainPageObject MainPageObject;
 
-    @BeforeEach
-    @Override
-    public void setUp() throws Exception {
-        super.setUp(); // Это вызовет setUp() из CoreTestCase
-        MainPageObject = new MainPageObject(driver);
-    }
+//    @BeforeEach
+//    @Override
+//    public void setUp() throws Exception {
+//        super.setUp(); // Это вызовет setUp() из CoreTestCase
+//        MainPageObject = new MainPageObject(driver);
+//    }
 
 
     @Test
@@ -63,8 +62,6 @@ public class FirstTest extends CoreTestCase {
 
         );
     }
-
-
 
 
     @Test
@@ -221,40 +218,49 @@ public class FirstTest extends CoreTestCase {
         String nameFindLine = "Java";
         String nameArticle = "Java (programming language)";
 
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
 
-        MainPageObject.waitForElementAndClick(
-                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
-                "------------------Cannot find element SKIP BUTTON---------------------------",
-                5
-        );
-
-
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text, '" + searchLine + "')]"),
-                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
-                5
-        );
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeInSearchLine("Java");
+        SearchPageObject.clickByArticleWithSubstring("Java (programming language)");
+        SearchPageObject.clickByElement(By.xpath("//android.widget.ImageView[@content-desc=\"Close\"]"));
+        //String article_title = ArticlePageObject.getArticleTitle();
 
 
-        MainPageObject.waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_src_text"),
-                nameFindLine,
-                "--------------------------Cannot find field for JAVA -----------------------------------",
-                5
-        );
-
-
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text, '" + nameArticle + "')]"),
-                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
-                5
-        );
-
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//android.widget.ImageView[@content-desc=\"Close\"]"),
-                "----------------------------Cannot find element WIDGET in search field - SEARCH WIKIPEDIA----------------------------------",
-                15
-        );
+//        MainPageObject.waitForElementAndClick(
+//                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+//                "------------------Cannot find element SKIP BUTTON---------------------------",
+//                5
+//        );
+//
+//
+//        MainPageObject.waitForElementAndClick(
+//                By.xpath("//*[contains(@text, '" + searchLine + "')]"),
+//                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+//                5
+//        );
+//
+//
+//        MainPageObject.waitForElementAndSendKeys(
+//                By.id("org.wikipedia:id/search_src_text"),
+//                nameFindLine,
+//                "--------------------------Cannot find field for JAVA -----------------------------------",
+//                5
+//        );
+//
+//
+//        MainPageObject.waitForElementAndClick(
+//                By.xpath("//*[contains(@text, '" + nameArticle + "')]"),
+//                "----------------------------Cannot find element in search field - SEARCH WIKIPEDIA----------------------------------",
+//                5
+//        );
+//
+//        MainPageObject.waitForElementAndClick(
+//                By.xpath("//android.widget.ImageView[@content-desc=\"Close\"]"),
+//                "----------------------------Cannot find element WIDGET in search field - SEARCH WIKIPEDIA----------------------------------",
+//                15
+//        );
 
         MainPageObject.waitForElementAndClick(
                 By.id("org.wikipedia:id/page_save"),
