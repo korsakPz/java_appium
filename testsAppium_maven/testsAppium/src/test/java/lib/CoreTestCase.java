@@ -1,9 +1,10 @@
 package lib;
 
 import io.appium.java_client.android.AndroidDriver;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.After;
+import org.junit.Before;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.junit.*;
 
 import java.net.URL;
 
@@ -13,8 +14,8 @@ public class CoreTestCase{
     private static String AppiumURL = "http://127.0.0.1:4723";
 
 
-    @BeforeEach
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
         String apkPlace = "C:\\Users\\Korsak\\Documents\\KURSES\\java_appium\\JavaAppium\\APKs\\org_wikipedia.apk";
 
@@ -32,8 +33,8 @@ public class CoreTestCase{
         driver = new AndroidDriver(new URL(AppiumURL), capabilities);
     }
 
-    @AfterEach
-    protected void tearDown() throws Exception{
+    @After
+    public void tearDown() throws Exception{
         if (driver != null) {
             driver.quit();
         }

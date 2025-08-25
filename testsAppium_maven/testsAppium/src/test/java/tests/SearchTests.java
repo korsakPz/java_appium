@@ -4,9 +4,9 @@ import lib.CoreTestCase;
 import lib.UI.ArticlePageObject;
 import lib.UI.MainPageObject;
 import lib.UI.SearchPageObject;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openqa.selenium.By;
-import org.testng.Assert;
 
 public class SearchTests extends CoreTestCase {
 
@@ -201,8 +201,8 @@ public class SearchTests extends CoreTestCase {
         // Проверяем, что результаты не пустые
         Assert.assertTrue(
 
-                amountOfSearchResults > 0,
-                "We found too few results! Expected more than 0, but got: " + amountOfSearchResults
+                "We found too few results! Expected more than 0, but got: " + amountOfSearchResults,
+                amountOfSearchResults > 0
 
         );
 

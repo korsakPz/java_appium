@@ -4,7 +4,7 @@ import lib.CoreTestCase;
 import lib.UI.ArticlePageObject;
 import lib.UI.MainPageObject;
 import lib.UI.SearchPageObject;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.openqa.selenium.By;
 
 public class MyyListsTests extends CoreTestCase {

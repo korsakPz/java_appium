@@ -4,9 +4,11 @@ import lib.CoreTestCase;
 import lib.UI.ArticlePageObject;
 import lib.UI.MainPageObject;
 import lib.UI.SearchPageObject;
-import org.junit.jupiter.api.Test;
+
+import org.junit.Assert;
+import org.junit.Test;
 import org.openqa.selenium.By;
-import org.testng.Assert;
+
 
 public class ArticleTests extends CoreTestCase {
 

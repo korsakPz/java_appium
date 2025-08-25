@@ -2,10 +2,10 @@ package tests;
 
 import lib.CoreTestCase;
 import lib.UI.MainPageObject;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ScreenOrientation;
-import org.testng.Assert;
 
 import java.time.Duration;
 
