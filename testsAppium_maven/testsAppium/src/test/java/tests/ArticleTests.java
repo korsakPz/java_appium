@@ -7,6 +7,8 @@ import lib.UI.SearchPageObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import lib.UI.MainPageObject;
+import org.openqa.selenium.By;
 
 
 public class ArticleTests extends CoreTestCase {

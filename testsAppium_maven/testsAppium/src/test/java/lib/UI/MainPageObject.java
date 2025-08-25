@@ -10,6 +10,7 @@ import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.naming.Context;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
@@ -65,6 +66,7 @@ public class MainPageObject{
     //---------------------------------------------------------Метод Свайп----------------------------------------------
     public void swipeUp(int timeOfSwipe) {
 
+//        return ((ContextAware) this.driver).context();
         Dimension size = driver.manage().window().getSize();
         System.out.println("[DEBUG] Screen size: " + size); // Лог размеров экрана
 
@@ -100,7 +102,7 @@ public class MainPageObject{
         System.out.println("[DEBUG] Added pointer up");
 
         // 5. Выполняем свайп
-        System.out.println("[DEBUG] Performing swipe...");
+//        System.out.println("[DEBUG] Performing swipe...");
         driver.perform(Collections.singletonList(swipe));
         System.out.println("[DEBUG] Swipe performed successfully");
 
