@@ -2,6 +2,7 @@ package lib.UI;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class SearchPageObject extends MainPageObject {
 
@@ -13,7 +14,7 @@ public class SearchPageObject extends MainPageObject {
             SEARCH_CANCEL_BUTTON = "//android.widget.ImageButton[@content-desc=\"Navigate up\"]";
 
 
-    public SearchPageObject(AndroidDriver driver) {
+    public SearchPageObject(RemoteWebDriver driver) {
 
         super(driver);
 

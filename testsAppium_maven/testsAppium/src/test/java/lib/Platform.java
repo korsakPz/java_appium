@@ -1,10 +1,15 @@
 package lib;
 
 import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class Platform {
 
@@ -20,7 +25,11 @@ public class Platform {
 
         if (this.isAndroid()) {
             return new AndroidDriver(URL, getAndroidDesiredCapabilities());
-        } else {
+        } else if (this.isMw()){
+            return new ChromeDriver(this.getMwChromeOptions());
+
+        }
+        else {
             throw new Exception("Cannot need platform. Find another platform " + this.getPlatformVar());
         }
 
@@ -57,7 +66,27 @@ public class Platform {
     }
 
     private String getPlatformVar() {
-        return System.getenv("PLATFORM");
+        return System.getProperty("PLATFORM","android");
+    }
+
+    private ChromeOptions getMwChromeOptions() {
+
+        Map<String, Object> deviceMetrics = new HashMap<String,Object>();
+        deviceMetrics.put("width", 360);
+        deviceMetrics.put("height", 640);
+        deviceMetrics.put("pixel", 3.0);
+
+        Map<String, Object>  mobileEmulation = new HashMap<String,Object>();
+        mobileEmulation.put("deviceMetrics", deviceMetrics);
+        mobileEmulation.put("userAgent", "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.6723.98 Mobile Safari/537.36");
+
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("window-size = 340, 640");
+
+        return chromeOptions;
+
+
+
     }
 
 

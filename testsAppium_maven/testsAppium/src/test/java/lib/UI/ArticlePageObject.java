@@ -3,6 +3,7 @@ package lib.UI;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class ArticlePageObject extends MainPageObject{
 
@@ -10,7 +11,7 @@ public class ArticlePageObject extends MainPageObject{
             TITLE = "//*[contains(@text, 'Java (programming language)')]",
             FOOTER_ELEMENT = "//*[contains(@text, 'Content is available under')]";;
 
-    public ArticlePageObject(AndroidDriver driver){
+    public ArticlePageObject(RemoteWebDriver driver){
         super(driver);
     }
 
