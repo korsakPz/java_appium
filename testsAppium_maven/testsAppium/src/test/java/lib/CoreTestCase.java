@@ -12,7 +12,6 @@ public class CoreTestCase{
 
 
 
-
     @Before
     public void setUp() throws Exception {
 

@@ -1,5 +1,6 @@
 package tests;
 
+import io.appium.java_client.android.AndroidDriver;
 import lib.CoreTestCase;
 import lib.UI.MainPageObject;
 import org.junit.Assert;
@@ -47,7 +48,13 @@ public class ChangeConditionTests extends CoreTestCase {
                 5
         );
 
-        driver.runAppInBackground(Duration.ofSeconds(4));
+        if (driver instanceof AndroidDriver) {
+            AndroidDriver driver = (AndroidDriver) this.driver;
+            driver.runAppInBackground(Duration.ofSeconds(4));
+        } else {
+            System.out.println("Method does nothing for this platform ");
+        }
+
 
         MainPageObject.waitForElementPresent(
                 By.xpath("//*[contains(@text, '" + nameArticle + "')]"),
@@ -114,7 +121,13 @@ public class ChangeConditionTests extends CoreTestCase {
 
         );
 
-        driver.rotate(org.openqa.selenium.ScreenOrientation.LANDSCAPE);
+        if (driver instanceof AndroidDriver) {
+            AndroidDriver driver = (AndroidDriver) this.driver;
+            driver.rotate(org.openqa.selenium.ScreenOrientation.LANDSCAPE);
+        } else {
+            System.out.println("Method does nothing for this platform ");
+        }
+
 
 
         String title_after_rotation = MainPageObject.waitForElementAndGetAttribute(
@@ -132,7 +145,13 @@ public class ChangeConditionTests extends CoreTestCase {
 
         );
 
-        driver.rotate(ScreenOrientation.PORTRAIT);
+        if (driver instanceof AndroidDriver) {
+            AndroidDriver driver = (AndroidDriver) this.driver;
+            driver.rotate(ScreenOrientation.PORTRAIT);
+        } else {
+            System.out.println("Method does nothing for this platform ");
+        }
+
         String title_after_second_rotation = MainPageObject.waitForElementAndGetAttribute(
                 By.xpath("//*[contains(@text, 'Java (programming language)')]"),
                 "text",

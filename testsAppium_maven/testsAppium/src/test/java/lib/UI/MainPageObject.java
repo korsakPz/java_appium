@@ -222,6 +222,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -230,9 +231,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class MainPageObject {
-    protected static AndroidDriver driver;
+    protected static RemoteWebDriver driver;
 
-    public MainPageObject(AndroidDriver driver) {
+    public MainPageObject(RemoteWebDriver driver) {
         this.driver = driver;
     }
 

@@ -1,5 +1,6 @@
 package tests;
 
+import io.appium.java_client.android.AndroidDriver;
 import lib.CoreTestCase;
 import lib.UI.ArticlePageObject;
 import lib.UI.MainPageObject;
@@ -15,14 +16,14 @@ public class ArticleTests extends CoreTestCase {
 
     @Test
     public void testCompareArticleTitle() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = new SearchPageObject((AndroidDriver) driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeInSearchLine("Java");
         SearchPageObject.clickByArticleWithSubstring("Java (programming language)");
         SearchPageObject.clickByElement(By.xpath("//android.widget.ImageView[@content-desc=\"Close\"]"));
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = new ArticlePageObject((AndroidDriver)driver);
 
         String article_element = ArticlePageObject.getArticleTitle();
         Assert.assertEquals(
