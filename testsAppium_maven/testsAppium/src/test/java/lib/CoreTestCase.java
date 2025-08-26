@@ -17,7 +17,7 @@ public class CoreTestCase{
 
         this.Platform = new Platform();
         driver = this.Platform.getDriver();
-        this.openWikiWebPageForMobileWeb();
+
 
 
     }
@@ -29,14 +29,7 @@ public class CoreTestCase{
         }
     }
 
-    protected void openWikiWebPageForMobileWeb () {
-        if (Platform.isMw()) {
-            driver.get("https://en.m.wikipedia.org/");
 
-        } else {
-            System.out.println("Method openWikiWebPageForMobileWeb() do nothing for platform " + Platform.isMw());
-        }
-    }
 
 
 }

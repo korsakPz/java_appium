@@ -1,6 +1,7 @@
 package tests;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.qameta.allure.junit4.DisplayName;
 import lib.CoreTestCase;
 import lib.UI.ArticlePageObject;
 import lib.UI.MainPageObject;
@@ -8,13 +9,12 @@ import lib.UI.SearchPageObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import lib.UI.MainPageObject;
-import org.openqa.selenium.By;
 
 
 public class ArticleTests extends CoreTestCase {
 
     @Test
+    @DisplayName("Compare article title expect ")
     public void testCompareArticleTitle() {
         SearchPageObject SearchPageObject = new SearchPageObject((AndroidDriver) driver);
 
@@ -35,6 +35,7 @@ public class ArticleTests extends CoreTestCase {
     }
 
     @Test
+    @DisplayName("Swipe article to the footer")
     public void testSwipeArticleList() {
 
         MainPageObject.waitForElementAndClick(
