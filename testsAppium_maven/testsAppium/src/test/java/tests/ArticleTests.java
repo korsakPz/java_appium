@@ -1,6 +1,9 @@
 package tests;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.junit4.DisplayName;
 import lib.CoreTestCase;
 import lib.UI.ArticlePageObject;
@@ -10,11 +13,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
-
+@Epic("Wikipedia")
+@Feature("Article")
 public class ArticleTests extends CoreTestCase {
 
     @Test
     @DisplayName("Compare article title expect ")
+    @Description("Открываем статью и проверяем заголовок")
     public void testCompareArticleTitle() {
         SearchPageObject SearchPageObject = new SearchPageObject((AndroidDriver) driver);
 
@@ -36,6 +41,7 @@ public class ArticleTests extends CoreTestCase {
 
     @Test
     @DisplayName("Swipe article to the footer")
+    @Description("Свайпаем вниз экрана")
     public void testSwipeArticleList() {
 
         MainPageObject.waitForElementAndClick(
