@@ -36,6 +36,9 @@ public class CoreTestCase{
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
+        if (platform == null) {
+            platform = "android"; // значение по умолчанию
+        }
         if (platform.equals(PLATFORM_ANDROID)) {
 
             capabilities.setCapability("platformName", "Android");
