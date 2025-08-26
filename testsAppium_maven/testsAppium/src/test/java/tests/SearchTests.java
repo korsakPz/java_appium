@@ -1,5 +1,6 @@
 package tests;
 
+import io.appium.java_client.android.AndroidDriver;
 import lib.CoreTestCase;
 import lib.UI.ArticlePageObject;
 import lib.UI.MainPageObject;
@@ -12,7 +13,7 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testSearch() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = new SearchPageObject((AndroidDriver)driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeInSearchLine("Java");
@@ -22,7 +23,7 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testCanselSearch() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = new SearchPageObject((AndroidDriver)driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.waitForCancelButtonToAppear();
@@ -37,7 +38,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testClearElement() {
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = new SearchPageObject((AndroidDriver)driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeInSearchLine("Java");
@@ -79,7 +80,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testSwipeToElementOnWindow() {
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = new SearchPageObject((AndroidDriver)driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeInSearchLine("Appium");
@@ -87,7 +88,7 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.clickByElement(By.xpath("//android.widget.ImageView[@content-desc=\"Close\"]"));
 
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = new ArticlePageObject((AndroidDriver)driver);
 
         ArticlePageObject.swipeToFooter();
 

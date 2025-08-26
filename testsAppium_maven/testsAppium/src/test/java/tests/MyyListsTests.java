@@ -1,5 +1,6 @@
 package tests;
 
+import io.appium.java_client.android.AndroidDriver;
 import lib.CoreTestCase;
 import lib.UI.ArticlePageObject;
 import lib.UI.MainPageObject;
@@ -17,8 +18,8 @@ public class MyyListsTests extends CoreTestCase {
         String nameFindLine = "Java";
         String nameArticle = "Java (programming language)";
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        SearchPageObject SearchPageObject = new SearchPageObject((AndroidDriver)driver);
+        ArticlePageObject ArticlePageObject = new ArticlePageObject((AndroidDriver)driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeInSearchLine("Java");
