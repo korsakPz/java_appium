@@ -16,9 +16,9 @@
     <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Allure -->
-    <aspectj.version>1.9.21</aspectj.version>
     <allure.version>2.22.0</allure.version>
-    <!-- Переменная PLATFORM по умолчанию -->
+    <aspectj.version>1.9.21</aspectj.version>
+    <!-- Платформа по умолчанию -->
     <PLATFORM>android</PLATFORM>
   </properties>
 
@@ -53,7 +53,7 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- AspectJ Weaver (для работы Allure с аспектами) -->
+    <!-- AspectJ Weaver (для работы @Step, @Feature и других аспектов Allure) -->
     <dependency>
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjweaver</artifactId>
@@ -72,7 +72,7 @@
 
   <build>
     <plugins>
-      <!-- Compiler Plugin -->
+      <!-- Maven Compiler Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -84,7 +84,7 @@
         </configuration>
       </plugin>
 
-      <!-- Surefire Plugin -->
+      <!-- Maven Surefire Plugin (запуск тестов) -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -94,13 +94,14 @@
           <systemPropertyVariables>
             <PLATFORM>${PLATFORM}</PLATFORM>
           </systemPropertyVariables>
-          <!-- Включаем AspectJ для Allure -->
+          <!-- Включаем AspectJ Weaver для Allure -->
           <argLine>
             -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
           </argLine>
           <useSystemClassLoader>true</useSystemClassLoader>
         </configuration>
         <dependencies>
+          <!-- Добавляем AspectJ для Surefire -->
           <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
@@ -109,7 +110,7 @@
         </dependencies>
       </plugin>
 
-      <!-- Allure Maven Plugin -->
+      <!-- Allure Maven Plugin (для генерации отчёта) -->
       <plugin>
         <groupId>io.qameta.allure</groupId>
         <artifactId>allure-maven</artifactId>
