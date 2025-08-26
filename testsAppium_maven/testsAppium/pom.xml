@@ -18,50 +18,41 @@
     <!-- Allure -->
     <allure.version>2.22.0</allure.version>
     <aspectj.version>1.9.21</aspectj.version>
-    <!-- Платформа по умолчанию -->
+    <!-- Платформа -->
     <PLATFORM>android</PLATFORM>
   </properties>
 
   <dependencies>
-    <!-- Appium Java Client -->
     <dependency>
       <groupId>io.appium</groupId>
       <artifactId>java-client</artifactId>
       <version>8.6.0</version>
     </dependency>
-
-    <!-- Selenium Java -->
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <version>4.15.0</version>
     </dependency>
-
-    <!-- JUnit 4 -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
-
-    <!-- Allure JUnit4 Adapter -->
+    <!-- Добавлено: Allure JUnit4 -->
     <dependency>
       <groupId>io.qameta.allure</groupId>
       <artifactId>allure-junit4</artifactId>
       <version>${allure.version}</version>
       <scope>test</scope>
     </dependency>
-
-    <!-- AspectJ Weaver (для работы @Step, @Feature и других аспектов Allure) -->
+    <!-- Добавлено: AspectJ для аспектов Allure -->
     <dependency>
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjweaver</artifactId>
       <version>${aspectj.version}</version>
       <scope>test</scope>
     </dependency>
-
-    <!-- SLF4J Simple Logger -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
@@ -72,7 +63,6 @@
 
   <build>
     <plugins>
-      <!-- Maven Compiler Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -80,28 +70,24 @@
         <configuration>
           <source>11</source>
           <target>11</target>
-          <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
-
-      <!-- Maven Surefire Plugin (запуск тестов) -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.0.0-M9</version>
         <configuration>
-          <!-- Передаём PLATFORM как системное свойство -->
+          <!-- Передаём PLATFORM -->
           <systemPropertyVariables>
             <PLATFORM>${PLATFORM}</PLATFORM>
           </systemPropertyVariables>
-          <!-- Включаем AspectJ Weaver для Allure -->
+          <!-- Включаем AspectJ Weaver -->
           <argLine>
             -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
           </argLine>
           <useSystemClassLoader>true</useSystemClassLoader>
         </configuration>
         <dependencies>
-          <!-- Добавляем AspectJ для Surefire -->
           <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
@@ -109,8 +95,7 @@
           </dependency>
         </dependencies>
       </plugin>
-
-      <!-- Allure Maven Plugin (для генерации отчёта) -->
+      <!-- Allure Maven Plugin -->
       <plugin>
         <groupId>io.qameta.allure</groupId>
         <artifactId>allure-maven</artifactId>
